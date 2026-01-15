@@ -1,0 +1,29 @@
+@startuml battleshipAuth
+participant guest
+participant host
+
+guest <--> host: real life passphrase exchange
+
+== Diffie-Hellman Key Exchange ==
+
+host <-> guest: DH exchange
+
+== Authentication (encrypted) ==
+
+guest <-> host: nonce + public key
+activate guest
+activate host
+
+== Authentication (encrypted  and signed) ==
+
+guest <-> host: hashed passphrase + nonce
+
+alt #ff4249 passphrases dont match
+host <--> guest: break connection
+deactivate host
+deactivate guest
+end
+
+== Communication (encrypted and signed) ==
+
+@enduml

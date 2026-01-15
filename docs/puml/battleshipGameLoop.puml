@@ -1,0 +1,38 @@
+@startuml battleshipGameLoop
+participant guest
+participant host
+
+host -> host: setup the game
+
+group auth
+guest <-> host: handshake
+end
+
+guest -> host: connect
+host -> guest: game_setup
+
+par
+host -> host: flip a coin
+guest -> guest: flip a coin
+end
+
+guest <-> host: ready
+
+host <-> guest: coin_flip
+
+loop until all ships are sunk
+    host -> guest: attack
+    guest -> host: attack_response
+    guest -> host: attack
+    host -> guest: attack_response
+end
+
+host <-> guest: game_over
+
+par
+host -> host: verify
+guest -> guest: verify
+end
+
+
+@enduml
