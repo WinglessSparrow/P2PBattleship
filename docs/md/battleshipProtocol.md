@@ -105,14 +105,14 @@ guest sends the **Connect** message, and the host responds with the
 The Board is represented as an **N** by **M** 2D array of characters
 following the schema:
 
-| Ship Type  | Cell Value | Ship Size |
-|:-----------|:-----------|-----------|
-| Carrier    | C          | 5         |
-| Battleship | B          | 4         |
-| Frigate    | F          | 3         |
-| Destroyer  | D          | 2         |
-| Submarine  | S          | 1         |
-| Empty Cell | E          | 0         |
+| Ship Type  | Cell Value | Ship Size | Max Ships Amount |
+|:-----------|:-----------|-----------|------------------|
+| Carrier    | C          | 5         | 1                |
+| Battleship | B          | 4         | 2                |
+| Frigate    | F          | 3         | 2                |
+| Destroyer  | D          | 2         | 3                |
+| Submarine  | S          | 1         | 1                |
+| Empty Cell | E          | 0         | -                |
 
 The Game follow the common
 Battleship [rules](https://en.wikipedia.org/wiki/Battleship_(game))
