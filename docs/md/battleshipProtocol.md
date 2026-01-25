@@ -244,7 +244,7 @@ the Player can still verify the game state.
 ```json
 {
   "attackStatus": "hit | miss | sink",
-  "sunkShip": "shipType"
+  "sunkShip": "shipType | null"
 }
 ```
 
