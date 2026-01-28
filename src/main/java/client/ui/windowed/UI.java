@@ -1,7 +1,13 @@
 package client.ui.windowed;
 
+import game.BattleshipGame;
+import game.CoinFlipManager;
+import game.GameSetup;
+import game.player.Player;
+
 import javax.swing.*;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class UI extends JFrame {
     public UI() {
@@ -9,12 +15,16 @@ public class UI extends JFrame {
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        setSize(1200, 1200);
+        setSize(2200, 1200);
         setResizable(false);
 
-        add(new BattleshipPane());
+        final var setup = new GameSetup(10, 10, new Player("1"), new Player("2"));
+        final var battleship = new BattleshipGame(setup, new CoinFlipManager(false));
 
-        final var executor = Executors.newSingleThreadScheduledExecutor();
-        executor.scheduleAtFixedRate(this::repaint, 0, 10, java.util.concurrent.TimeUnit.MILLISECONDS);
+        add(new BoardBuilder(battleship));
+
+        final var executor = Executors.newScheduledThreadPool(2);
+        executor.scheduleAtFixedRate(this::repaint, 0, 10, TimeUnit.MILLISECONDS);
+        executor.scheduleAtFixedRate(battleship::notifyUpdate, 0, 300, TimeUnit.MILLISECONDS);
     }
 }

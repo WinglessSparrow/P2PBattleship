@@ -33,6 +33,8 @@ public class BattleshipGame {
         playersBoard = new Board(setup.player(), setup.boardWidth(), setup.boardHeight(), rules);
 
         opponentsBoard = new UnknownBoard(setup.opponent(), setup.boardWidth(), setup.boardHeight());
+
+        notifyUpdate();
     }
 
     public void ready(boolean opponentsCoinFlip) {
@@ -46,7 +48,7 @@ public class BattleshipGame {
 
         stateManager.setNextState(GameState.READY);
 
-        subject.notify(BattleShipGameData.from(this));
+        notifyUpdate();
     }
 
     public void start() {
@@ -56,6 +58,10 @@ public class BattleshipGame {
 
         stateManager.setNextState(GameState.PLAYING);
 
+        notifyUpdate();
+    }
+
+    public void notifyUpdate() {
         subject.notify(BattleShipGameData.from(this));
     }
 
@@ -70,7 +76,7 @@ public class BattleshipGame {
 
         playersBoard.addShip(ship);
 
-        subject.notify(BattleShipGameData.from(this));
+        notifyUpdate();
     }
 
     public Optional<Ship> markOpponentsAttack(Pos2D at) {
@@ -88,7 +94,7 @@ public class BattleshipGame {
 
         verifyGame();
 
-        subject.notify(BattleShipGameData.from(this));
+        notifyUpdate();
 
         return hitShip;
     }
@@ -114,7 +120,7 @@ public class BattleshipGame {
 
         verifyGame();
 
-        subject.notify(BattleShipGameData.from(this));
+        notifyUpdate();
 
         return hitShip;
     }
@@ -145,7 +151,7 @@ public class BattleshipGame {
 
     public void finishGame(boolean won) {
         stateManager.finish(won);
-        subject.notify(BattleShipGameData.from(this));
+        notifyUpdate();
     }
 
     public void setOpponentsBoats(BoardCell[][] board, List<Ship> ships) {

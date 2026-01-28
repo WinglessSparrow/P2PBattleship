@@ -32,6 +32,14 @@ public record Ship(
         this(type, vertical, cells, false);
     }
 
+    public Ship(ShipType type, boolean vertical) {
+        this(type, vertical, null, false);
+    }
+
+    public Ship rotate(boolean vertical) {
+        return new Ship(type, vertical, cells, isSunk);
+    }
+
     public Ship hit(final Pos2D at) {
         if (cells.stream().noneMatch(c -> c.position().equals(at))) {
             throw new IllegalArgumentException("Point is not part of the ship");

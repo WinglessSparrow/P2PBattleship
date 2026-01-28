@@ -54,4 +54,8 @@ public class PaintableBoardCell {
     public Point getRelativePosition() {
         return relativePosition;
     }
+
+    public Point getGridPosition() {
+        return new Point(cell.position().x(), cell.position().y());
+    }
 }
