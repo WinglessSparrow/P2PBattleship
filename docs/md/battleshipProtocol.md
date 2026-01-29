@@ -109,8 +109,8 @@ following the schema:
 |:-----------|:-----------|-----------|------------------|
 | Carrier    | C          | 5         | 1                |
 | Battleship | B          | 4         | 2                |
-| Frigate    | F          | 3         | 2                |
-| Destroyer  | D          | 2         | 3                |
+| Frigate    | F          | 3         | 3                |
+| Destroyer  | D          | 2         | 4                |
 | Submarine  | S          | 1         | 1                |
 | Empty Cell | E          | 0         | -                |
 
