@@ -12,8 +12,8 @@ guest -> host: connect
 host -> guest: game_setup
 
 par
-host -> host: flip a coin
-guest -> guest: flip a coin
+host -> host: setup / flip a coin
+guest -> guest: setup / flip a coin
 end
 
 guest <-> host: ready

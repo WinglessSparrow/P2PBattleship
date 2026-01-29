@@ -222,7 +222,7 @@ the Player can still verify the game state.
 }
 ```
 
-##### Ready
+##### Coin Flip
 
 ```json
 {
