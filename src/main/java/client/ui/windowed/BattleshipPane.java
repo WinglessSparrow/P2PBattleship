@@ -8,6 +8,8 @@ import game.GameState;
 import game.observer.base.Observer;
 import game.observer.battleship.BattleShipGameData;
 import game.player.Player;
+import game.player.PlayerManager;
+import game.player.PlayerType;
 import game.player.ShipType;
 
 import javax.swing.*;
@@ -26,9 +28,11 @@ public class BattleshipPane extends JPanel implements Observer<BattleShipGameDat
 
         setBackground(Color.GREEN);
 
-        final var setup = new GameSetup(10, 10, new Player("1"), new Player("2"));
+        final var setup = new GameSetup(10, 10);
+        final var player = new Player("", PlayerType.SELF_GUEST, false);
+        final var opponent = new Player("", PlayerType.REMOTE_HOST, false);
 
-        battleship = new BattleshipGame(setup, new CoinFlipManager(false));
+        battleship = new BattleshipGame(setup, new CoinFlipManager(false), new PlayerManager(player, opponent));
 
         battleship.getSubject().register(this);
 

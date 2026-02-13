@@ -2,6 +2,8 @@ package game.observer.battleship;
 
 
 import game.board.BoardCell;
+import game.player.Player;
+import game.player.PlayerType;
 import game.ship.Ship;
 
 import java.util.List;
@@ -11,6 +13,6 @@ public record PlayersData(
         int cols,
         int rows,
         List<Ship> ships,
-        boolean won
+        Player player
 ) {
 }

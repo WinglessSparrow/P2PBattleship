@@ -18,13 +18,13 @@ import java.util.Scanner;
 public class Console implements Observer<BattleShipGameData> {
 
     private final BattleshipGame battleship;
-    private final Player player = new Player("1");
-    private final Player opponent = new Player("2");
+//    private final Player player = new Player("1");
+//    private final Player opponent = new Player("2");
 
     public Console() {
-        final var setup = new GameSetup(10, 10, player, opponent);
+//        final var setup = new GameSetup(10, 10, player, opponent);
 
-        battleship = new BattleshipGame(setup, new CoinFlipManager(false));
+        battleship = new BattleshipGame(null, new CoinFlipManager(false), null);
 
         battleship.getSubject().register(this);
     }
@@ -66,7 +66,8 @@ public class Console implements Observer<BattleShipGameData> {
         IO.println("Game started");
 
         while (battleship.getGameState() != GameState.FINISHED) {
-            if (battleship.getCurrentPlayer().equals(player)) {
+//            if (battleship.getCurrentPlayer().equals(player)) {
+            if (battleship.getCurrentPlayer().equals(null)) {
                 IO.print("attack at (x/y): ");
                 var line = reader.nextLine();
                 var point = new Pos2D(Integer.parseInt(line.charAt(0) + ""), Integer.parseInt(line.charAt(2) + ""));

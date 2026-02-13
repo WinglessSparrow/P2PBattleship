@@ -2,5 +2,5 @@ package game;
 
 import game.player.Player;
 
-public record GameSetup(int boardWidth, int boardHeight, Player player, Player opponent) {
+public record GameSetup(int boardWidth, int boardHeight) {
 }

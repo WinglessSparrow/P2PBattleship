@@ -28,6 +28,10 @@ public class BoardBuilder extends JPanel implements Observer<BattleShipGameData>
 
         add(shipsChooserPane);
         add(playersBoard);
+        add(new PlayerInfoBoard(battleship.getPlayers().getFirst(), (_) -> {
+        }));
+        add(new PlayerInfoBoard(battleship.getPlayers().getLast(), (_) -> {
+        }));
     }
 
     public void setShip(Ship ship) {

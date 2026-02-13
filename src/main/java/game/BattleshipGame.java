@@ -26,13 +26,15 @@ public class BattleshipGame {
 
     public GameStateManager stateManager = new GameStateManager();
 
-    public BattleshipGame(GameSetup setup, CoinFlipManager coinFlipManager) {
-        this.playerManager = new PlayerManager(setup.player(), setup.opponent());
+    public BattleshipGame(GameSetup setup, CoinFlipManager coinFlipManager, PlayerManager playerManager) {
         this.coinFlipManager = coinFlipManager;
+        this.playerManager = playerManager;
 
-        playersBoard = new Board(setup.player(), setup.boardWidth(), setup.boardHeight(), rules);
+        final var players = playerManager.getPlayers();
 
-        opponentsBoard = new UnknownBoard(setup.opponent(), setup.boardWidth(), setup.boardHeight());
+        playersBoard = new Board(players.getFirst(), setup.boardWidth(), setup.boardHeight(), rules);
+
+        opponentsBoard = new UnknownBoard(players.getLast(), setup.boardWidth(), setup.boardHeight());
 
         notifyUpdate();
     }
@@ -157,13 +159,17 @@ public class BattleshipGame {
     public void setOpponentsBoats(BoardCell[][] board, List<Ship> ships) {
         if (stateManager.getState() == GameState.FINISHED) {
             if (stateManager.isWon()) {
-
+                //TODO logic for setting board when somebody won?!
             } else {
 
             }
         } else {
             throw new IllegalStateException("Opponents board can only be set after the game has finished");
         }
+    }
+
+    public List<Player> getPlayers() {
+        return playerManager.getPlayers();
     }
 
     public BattleShipSubject getSubject() {
