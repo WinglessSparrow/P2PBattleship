@@ -54,7 +54,6 @@ public class BoardBuilderPanel extends JPanel implements Observer<BattleShipGame
         } else if (e.getButton() == MouseEvent.BUTTON3) {
             removeShip(cell);
         }
-
     }
 
     private void addAShip(PaintableBoardCell cell) {
@@ -92,7 +91,6 @@ public class BoardBuilderPanel extends JPanel implements Observer<BattleShipGame
         if (data.playersData().player().ready() && data.opponentsData().player().ready()) {
             onStart.run();
         }
-
     }
 
     @Override
