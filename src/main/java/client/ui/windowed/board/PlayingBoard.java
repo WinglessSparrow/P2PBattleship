@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class PlayingBoard extends JPanel {
@@ -16,9 +17,9 @@ public class PlayingBoard extends JPanel {
     protected List<PaintableBoardCell> cells = new ArrayList<>();
     protected List<PaintableShip> ships = new ArrayList<>();
     protected PlayersData data;
-    private Consumer<PaintableBoardCell> onClick;
+    private final BiConsumer<PaintableBoardCell, MouseEvent> onClick;
 
-    public PlayingBoard(Dimension preferredSize, Consumer<PaintableBoardCell> onClick) {
+    public PlayingBoard(Dimension preferredSize, BiConsumer<PaintableBoardCell, MouseEvent> onClick) {
         setPreferredSize(preferredSize);
         this.onClick = onClick;
 
@@ -27,14 +28,14 @@ public class PlayingBoard extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
 
-                if (e.getButton() == MouseEvent.BUTTON1 && data != null) {
+                if (data != null) {
                     final var width = getWidth() / data.cols();
                     final var height = getHeight() / data.rows();
                     final var mousePos = Grid2DUtils.getMouseGridPosition(e.getPoint(), width, height);
                     final var cell = cells.stream().filter(c -> c.getGridPosition().equals(mousePos)).findFirst()
                                           .orElse(null);
 
-                    invokeClick(cell);
+                    invokeClick(cell, e);
                 }
             }
         });
@@ -73,13 +74,9 @@ public class PlayingBoard extends JPanel {
         revalidate();
     }
 
-    protected void invokeClick(PaintableBoardCell cell) {
+    protected void invokeClick(PaintableBoardCell cell, MouseEvent e) {
         if (onClick != null) {
-            onClick.accept(cell);
+            onClick.accept(cell, e);
         }
-    }
-
-    public void setOnClick(Consumer<PaintableBoardCell> onClick) {
-        this.onClick = onClick;
     }
 }

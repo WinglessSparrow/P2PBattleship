@@ -5,25 +5,17 @@ import game.ship.Ship;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class SetupPlayingBoard extends PlayingBoard {
 
-    private final Consumer<Ship> onSetShip;
     private Ship chosenShip = null;
 
-    public SetupPlayingBoard(Dimension preferredSize, Consumer<Ship> onSetShip) {
-        super(preferredSize, null);
-
-        this.onSetShip = onSetShip;
-
-        setOnClick((cell) -> {
-            if (chosenShip != null) {
-                onSetShip.accept(new Ship(chosenShip.type(), chosenShip.vertical(), cell.getCell().position()));
-                chosenShip = null;
-            }
-        });
+    public SetupPlayingBoard(Dimension preferredSize, BiConsumer<PaintableBoardCell, MouseEvent> onClick) {
+        super(preferredSize, onClick);
 
         addMouseWheelListener(new MouseAdapter() {
             @Override
@@ -35,17 +27,6 @@ public class SetupPlayingBoard extends PlayingBoard {
                 }
             }
         });
-    }
-
-    @Override
-    protected void invokeClick(PaintableBoardCell cell) {
-        if (chosenShip != null) {
-            final var ship = new Ship(chosenShip.type(), chosenShip.vertical(), cell.getCell().position());
-
-            onSetShip.accept(ship);
-
-            chosenShip = null;
-        }
     }
 
     @Override
@@ -82,5 +63,9 @@ public class SetupPlayingBoard extends PlayingBoard {
         }
 
         this.chosenShip = new Ship(chosenShip, false);
+    }
+
+    public Ship getChosenShip() {
+        return chosenShip;
     }
 }
