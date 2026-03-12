@@ -35,4 +35,10 @@ public class ShipChooser extends JPanel {
         amountOfShipUsed++;
         label.setText(LABEL_TEXT.formatted(ship, amountOfShipUsed, ship.getMaxAmount()));
     }
+
+
+    public void decrementAmountOfShipUse() {
+        amountOfShipUsed--;
+        label.setText(LABEL_TEXT.formatted(ship, amountOfShipUsed, ship.getMaxAmount()));
+    }
 }

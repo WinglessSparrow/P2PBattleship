@@ -1,4 +1,4 @@
-package client.ui.windowed.packages;
+package client.ui.windowed.pages;
 
 import javax.swing.*;
 

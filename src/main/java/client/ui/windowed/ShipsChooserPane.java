@@ -30,12 +30,15 @@ public class ShipsChooserPane extends JPanel {
         setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
     }
 
-    public void update(ShipType setShip) {
+    public void update(ShipType setShip, boolean removing) {
         final var shipChooser = shipChoosers.get(setShip);
 
         if (shipChooser != null) {
-            shipChooser.incrementAmountOfShipUse();
+            if (removing) {
+                shipChooser.decrementAmountOfShipUse();
+            } else {
+                shipChooser.incrementAmountOfShipUse();
+            }
         }
-
     }
 }

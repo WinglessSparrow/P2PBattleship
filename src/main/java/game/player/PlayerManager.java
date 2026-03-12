@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerManager {
-    private static final int SELF = 0, OPPONENT = 1;
-
+    public static final int SELF = 0;
     private final List<Player> players;
 
     private int currentPlayerIndex;
@@ -26,9 +25,17 @@ public class PlayerManager {
         return players.get(currentPlayerIndex);
     }
 
-    public void setPlayerReady(boolean self) {
-        final var playerIdx = self ? SELF : OPPONENT;
+    public void setPlayerReady(Player player, boolean ready) {
+        final var playerIdx = players.indexOf(player);
 
-        players.set(playerIdx, players.get(playerIdx).setReady(true));
+        if (playerIdx == -1) {
+            throw new IllegalArgumentException("Supplied player not registered in player manager " + player);
+        }
+
+        players.set(playerIdx, players.get(playerIdx).setReady(ready));
+    }
+
+    public boolean isSelf(Player player) {
+        return players.indexOf(player) == SELF;
     }
 }

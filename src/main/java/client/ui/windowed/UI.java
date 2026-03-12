@@ -1,13 +1,15 @@
 package client.ui.windowed;
 
 import client.ui.Windows;
-import client.ui.windowed.packages.Game;
-import client.ui.windowed.packages.HostGame;
-import client.ui.windowed.packages.JoinGame;
-import client.ui.windowed.packages.MainMenu;
+import client.ui.windowed.pages.Game;
+import client.ui.windowed.pages.HostGame;
+import client.ui.windowed.pages.JoinGame;
+import client.ui.windowed.pages.MainMenu;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class UI extends JFrame {
     public UI() {
@@ -38,8 +40,8 @@ public class UI extends JFrame {
 //
 //        add(new BoardBuilder(battleship));
 //
-//        final var executor = Executors.newScheduledThreadPool(2);
-//        executor.scheduleAtFixedRate(this::repaint, 0, 10, TimeUnit.MILLISECONDS);
+        final var executor = Executors.newScheduledThreadPool(2);
+        executor.scheduleAtFixedRate(this::repaint, 0, 10, TimeUnit.MILLISECONDS);
 //        executor.scheduleAtFixedRate(battleship::notifyUpdate, 0, 300, TimeUnit.MILLISECONDS);
     }
 }

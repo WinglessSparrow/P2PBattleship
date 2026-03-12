@@ -7,6 +7,7 @@ import game.GameState;
 import game.board.BoardCell;
 import game.board.Pos2D;
 import game.board.boardRules.BrokenRuleException;
+import game.board.boardRules.OutOfBoundsException;
 import game.observer.base.Observer;
 import game.observer.battleship.BattleShipGameData;
 import game.player.Player;
@@ -29,7 +30,7 @@ public class Console implements Observer<BattleShipGameData> {
         battleship.getSubject().register(this);
     }
 
-    public void start() {
+    public void start() throws OutOfBoundsException {
         var reader = new Scanner(System.in);
 
         update(BattleShipGameData.from(battleship));

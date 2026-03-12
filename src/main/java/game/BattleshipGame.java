@@ -1,10 +1,7 @@
 package game;
 
 import game.board.*;
-import game.board.boardRules.BoardRule;
-import game.board.boardRules.BrokenRuleException;
-import game.board.boardRules.MaxShipsAmountRule;
-import game.board.boardRules.ShipDistanceRule;
+import game.board.boardRules.*;
 import game.observer.battleship.BattleShipSubject;
 import game.observer.battleship.BattleShipGameData;
 import game.player.Player;
@@ -81,7 +78,26 @@ public class BattleshipGame {
         notifyUpdate();
     }
 
-    public Optional<Ship> markOpponentsAttack(Pos2D at) {
+    public void removeShip(Ship ship) {
+        if (GameState.SETUP != stateManager.getState()) {
+            throw new IllegalStateException("Cannot remove a ship outside, ships can only be removed during the setup");
+        }
+
+        playersBoard.removeShip(ship);
+
+        notifyUpdate();
+    }
+
+
+    public Optional<Ship> removeShipAtPosition(Pos2D atPos) {
+        final var shipOpt = playersBoard.getAShip(atPos);
+
+        shipOpt.ifPresent(playersBoard::removeShip);
+
+        return shipOpt;
+    }
+
+    public Optional<Ship> markOpponentsAttack(Pos2D at) throws OutOfBoundsException {
         if (GameState.PLAYING != stateManager.getState()) {
             throw new IllegalStateException("Cannot strike a ship while not playing");
         }
@@ -166,6 +182,20 @@ public class BattleshipGame {
         } else {
             throw new IllegalStateException("Opponents board can only be set after the game has finished");
         }
+    }
+
+    public void setPlayerReady(Player player, boolean ready) {
+        if (ready && playerManager.isSelf(player) && !isPlayerSetupCorrectly()) {
+            throw new IllegalStateException("Cannot set player ready, since not all the ships have been placed yet");
+        }
+
+        playerManager.setPlayerReady(player, ready);
+
+        notifyUpdate();
+    }
+
+    public boolean isPlayerSetupCorrectly() {
+        return playersBoard.getAllShips().size() == ShipType.maxShipsAmount();
     }
 
     public List<Player> getPlayers() {

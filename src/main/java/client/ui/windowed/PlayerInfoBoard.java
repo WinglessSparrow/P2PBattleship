@@ -2,50 +2,39 @@ package client.ui.windowed;
 
 import client.ui.windowed.utils.GridBagBuilder;
 import game.player.Player;
-import game.player.PlayerType;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.function.Consumer;
+import java.util.List;
 
 public class PlayerInfoBoard extends JPanel {
 
-    private final JPanel readyIndicator;
-    private final JButton readyBtn;
+    private final PlayerIndicator opponentIndicator;
+    private final PlayerIndicator playerIndicator;
+    private final JButton btnReady;
 
-    public PlayerInfoBoard(Player player, Consumer<Player> onReady) {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
+    public PlayerInfoBoard(Player player, Player opponent, Runnable onReady, Runnable onCancel) {
         setLayout(new GridBagLayout());
 
-        var c = new GridBagBuilder().x(0).y(0).fill(GridBagConstraints.BOTH).build();
+        btnReady = new JButton("Ready");
+        btnReady.addActionListener(_ -> onReady.run());
+        add(btnReady, new GridBagBuilder().x(0).y(1).fill(GridBagConstraints.BOTH).build());
 
-        add(new JLabel(player.name()), c);
+        final var btnCancel = new JButton("Cancel");
+        btnCancel.addActionListener(_ -> onCancel.run());
+        add(btnCancel, new GridBagBuilder().x(1).y(1).fill(GridBagConstraints.BOTH).build());
 
-        readyIndicator = new JPanel();
-        readyIndicator.setBackground(Color.RED);
-        readyIndicator.setPreferredSize(new Dimension(20, 20));
-        readyIndicator.setOpaque(true);
+        playerIndicator = new PlayerIndicator(player);
+        add(playerIndicator, new GridBagBuilder().x(0).y(0).fill(GridBagConstraints.BOTH).build());
 
-        c = new GridBagBuilder().x(1).y(0).fill(GridBagConstraints.BOTH).build();
-        add(readyIndicator, c);
-
-        if (player.type() == PlayerType.SELF_GUEST || player.type() == PlayerType.SELF_HOST) {
-            readyBtn = new JButton("Ready");
-            readyBtn.addActionListener(_ -> onReady.accept(player));
-
-            c = new GridBagBuilder().x(0).y(1).fill(GridBagConstraints.BOTH).colSpan(2).build();
-            add(readyBtn, c);
-        } else {
-            readyBtn = null;
-        }
+        opponentIndicator = new PlayerIndicator(opponent);
+        add(opponentIndicator, new GridBagBuilder().x(1).y(0).fill(GridBagConstraints.BOTH).build());
     }
 
-    public void update(Player player) {
-        if (player.ready()) {
-            readyIndicator.setBackground(Color.GREEN);
+    public void update(List<Player> players, boolean playersBoardCorrect) {
+        opponentIndicator.update(players.getLast().ready());
+        playerIndicator.update(players.getFirst().ready());
 
-            if (readyBtn != null) readyBtn.setEnabled(false);
-        }
+        btnReady.setEnabled(playersBoardCorrect);
     }
 }

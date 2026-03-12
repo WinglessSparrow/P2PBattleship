@@ -10,19 +10,18 @@ import game.observer.battleship.BattleShipGameData;
 import game.player.Player;
 import game.player.PlayerManager;
 import game.player.PlayerType;
-import game.player.ShipType;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class BattleshipPane extends JPanel implements Observer<BattleShipGameData> {
+public class BattleshipPanel extends JPanel implements Observer<BattleShipGameData> {
 
     private final BattleshipGame battleship;
     private final PlayingBoard playersBoard;
     private final PlayingBoard opponentsBoard;
     private boolean displayOpponentBoard = false;
 
-    public BattleshipPane() {
+    public BattleshipPanel() {
         playersBoard = new PlayingBoard(new Dimension(400, 400), null);
         opponentsBoard = new PlayingBoard(new Dimension(400, 400), null);
 

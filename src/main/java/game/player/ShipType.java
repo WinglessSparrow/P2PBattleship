@@ -36,4 +36,8 @@ public enum ShipType {
     public static ShipType fromChar(char value) {
         return Arrays.stream(ShipType.values()).filter(s -> s.getValue() == value).findFirst().orElse(UNKNOWN);
     }
+
+    public static int maxShipsAmount() {
+        return Arrays.stream(ShipType.values()).mapToInt(ShipType::getMaxAmount).sum();
+    }
 }

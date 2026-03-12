@@ -8,14 +8,13 @@ import java.util.Arrays;
 
 public class MaxShipsAmountRule implements BoardRule {
 
-    private static final int maxShipsAmount = Arrays.stream(ShipType.values())
-                                                    .reduce(0, (acc, shipType) -> acc + shipType.getMaxAmount(), Integer::sum);
+    private static final int maxShipsAmount = ShipType.maxShipsAmount();
 
     @Override
     public void verify(Board board, Ship newShip) throws BrokenRuleException {
         final var ships = board.getAllShips();
 
-        if (ships.size() + 1 >= maxShipsAmount) {
+        if (ships.size() + 1 > maxShipsAmount) {
             throw new BrokenRuleException(this.getClass(), "Maximum number of ships reached");
         }
 

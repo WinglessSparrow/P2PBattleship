@@ -2,6 +2,7 @@ package game.board;
 
 import game.board.boardRules.BoardRule;
 import game.board.boardRules.BrokenRuleException;
+import game.board.boardRules.OutOfBoundsException;
 import game.player.Player;
 import game.player.ShipType;
 import game.ship.Ship;
@@ -59,7 +60,17 @@ public class Board {
         ships.add(ship);
     }
 
-    public Optional<Ship> hit(final Pos2D at) {
+    public void removeShip(final Ship ship) {
+        ships.remove(ship);
+
+        ship.cells().forEach(c -> board
+                [c.position().x()]
+                [c.position().y()] =
+                new BoardCell(ShipType.EMPTY, c.position(), false)
+        );
+    }
+
+    public Optional<Ship> hit(final Pos2D at) throws OutOfBoundsException {
         checkBounds(at);
 
         final var cell = board[at.x()][at.y()];
@@ -144,20 +155,20 @@ public class Board {
 
     }
 
-    private void checkBounds(final Pos2D at) {
+    private void checkBounds(final Pos2D at) throws OutOfBoundsException {
         if (at.x() >= cols || at.y() >= rows) {
-            throw new IllegalArgumentException("Point is out of bounds");
+            throw new OutOfBoundsException("Point is out of bounds");
         }
     }
 
-    private void checkShipBounds(final Ship ship) {
+    private void checkShipBounds(final Ship ship) throws OutOfBoundsException {
         final var at = ship.cells().getFirst().position();
 
         final var outOfBounds = ship.vertical() ?
                                 at.y() + ship.type().getSize() > rows :
                                 at.x() + ship.type().getSize() > cols;
         if (outOfBounds) {
-            throw new IllegalArgumentException("Ship is out of bounds");
+            throw new OutOfBoundsException("Ship is out of bounds");
         }
     }
 }

@@ -1,8 +1,7 @@
-package client.ui.windowed.packages;
+package client.ui.windowed.pages;
 
 import client.ui.Windows;
 import client.ui.windowed.Navigator;
-import client.ui.windowed.UI;
 import client.ui.windowed.utils.GridBagBuilder;
 
 import javax.swing.*;
