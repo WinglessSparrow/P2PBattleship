@@ -53,9 +53,7 @@ public class Board {
             rule.verify(this, ship);
         }
 
-        ship.cells().forEach(c -> {
-            board[c.position().x()][c.position().y()] = new BoardCell(ship.type(), c.position(), false);
-        });
+        ship.cells().forEach(c -> board[c.position().x()][c.position().y()] = new BoardCell(ship.type(), c.position(), false));
 
         ships.add(ship);
     }

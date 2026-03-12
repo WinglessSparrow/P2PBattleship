@@ -4,8 +4,6 @@ import game.ship.Ship;
 import game.player.ShipType;
 import game.board.Board;
 
-import java.util.Arrays;
-
 public class MaxShipsAmountRule implements BoardRule {
 
     private static final int maxShipsAmount = ShipType.maxShipsAmount();

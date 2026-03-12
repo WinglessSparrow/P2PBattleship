@@ -9,7 +9,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.util.Optional;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class SetupPlayingBoard extends PlayingBoard {
 

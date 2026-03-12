@@ -2,7 +2,6 @@ package client.ui.console;
 
 import game.BattleshipGame;
 import game.CoinFlipManager;
-import game.GameSetup;
 import game.GameState;
 import game.board.BoardCell;
 import game.board.Pos2D;
@@ -10,7 +9,6 @@ import game.board.boardRules.BrokenRuleException;
 import game.board.boardRules.OutOfBoundsException;
 import game.observer.base.Observer;
 import game.observer.battleship.BattleShipGameData;
-import game.player.Player;
 import game.player.ShipType;
 import game.ship.Ship;
 

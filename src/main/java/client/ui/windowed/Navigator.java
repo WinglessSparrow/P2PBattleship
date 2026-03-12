@@ -4,7 +4,6 @@ import client.ui.Windows;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.function.Consumer;
 
 public class Navigator {
     private static final Navigator instance = new Navigator();
